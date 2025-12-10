@@ -18,7 +18,11 @@ let package = Package(
             name: "FlockKit"),
         .testTarget(
             name: "FlockKitTests",
-            dependencies: ["FlockKit"]
+            dependencies: ["FlockKit"],
         ),
+        .executableTarget(
+            name: "LockTestHelper",
+            dependencies: ["FlockKit"]
+        )
     ]
 )
