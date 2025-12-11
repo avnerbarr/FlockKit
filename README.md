@@ -1,3 +1,7 @@
+<p align="center">
+    <img src="Sources/FlockKit/Documentation.docc/Resources/Logo.png" alt="Project Icon" width="250" />
+</p>
+
 # FlockKit
  
 A tiny Swift wrapper around POSIX `flock(2)` for ****cross-process**** file locking.
