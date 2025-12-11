@@ -7,6 +7,8 @@
 A tiny Swift wrapper around POSIX `flock(2)` for ****cross-process**** file locking.
 Use `FlockKit` when you need to ensure that ****only one process at a time**** runs a job or touches a file, without re-implementing lock files and race-prone shell scripts.
 
+**Full documentation can be found [here](https://avnerbarr.github.io/FlockKit/documentation/flockkit)**
+
 - [Features](#features)
 - [Requirements](#requirements)
 - [Installation](#installation)
