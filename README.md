@@ -1,7 +1,20 @@
-# ``FlockKit``
-
+# FlockKit
+ 
 A tiny Swift wrapper around POSIX `flock(2)` for ****cross-process**** file locking.
 Use `FlockKit` when you need to ensure that ****only one process at a time**** runs a job or touches a file, without re-implementing lock files and race-prone shell scripts.
+
+- [Features](#features)
+- [Requirements](#requirements)
+- [Installation](#installation)
+  - [Swift Package Manager](#swift-package-manager)
+  - [Xcode](#xcode)
+- [Quick start](#quick-start)
+  - [Basic exclusive lock (blocking)](#basic-exclusive-lock-blocking)
+  - [Non-blocking lock](#non-blocking-lock)
+  - [Scoped helpers](#scoped-helpers)
+    - [Exclusive (write) lock around a job](#exclusive-write-lock-around-a-job)
+    - [Shared (read) lock](#shared-read-lock)
+  - [Semantics & Caveats](#semantics--caveats)
 
 ## Features
 - ✅ Simple, Swifty API over `flock(2)`
@@ -214,8 +227,6 @@ struct MyTool {
 }
 ```
 
-## License
+# License
 
 FlockKit is licensed under the MIT License.
-
-

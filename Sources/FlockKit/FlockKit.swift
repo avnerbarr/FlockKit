@@ -127,11 +127,7 @@ public final class FileLock {
     // MARK: - Private
     private func lock(operation: Int32, blocking: Bool) throws(FlockKitError) {
         // prevent double locking
-        // guards against:
-        // let lock = try FileLock(path: "/tmp/demo.lock")
-        // try lock.lockExclusive()
-        // some code...
-        // try lock.lockExclusive()   // oops, forgot unlock in between
+        // guards against relocking
         guard !isLocked else {
             // Simple safety: prevent naive double-lock bugs.
             throw FlockKitError.doubleLockAttempt(path: path)
@@ -147,6 +143,33 @@ public final class FileLock {
         }
 
         isLocked = true
+    }
+}
+
+extension FileLock {
+    
+    /// Runs `body` while holding a shared process-wide lock on the given file.
+    /// - Parameters:
+    ///   - path: Path to the lock file used to coordinate between processes.
+    ///   - blocking: if `true`, ait until the lock is available. If `false` and the lock is not acquired, will throw an exception
+    ///   - body: Work to perform while the lock is held
+    public class func withSharedLock<R>(_ path: String, blocking: Bool = true, _ body: () throws -> R) throws(LockedJobError) -> R {
+        return try FlockKit.withSharedLock(at: path,blocking: blocking, body)
+    }
+    
+    
+    /// Runs `body` while holding an exclusive process-wide lock on the given file.
+    ///
+    /// - Parameters:
+    ///   - path: Path to the lock file used to coordinate between processes.
+    ///   - blocking: If `true`, wait until the lock is available. If `false`,
+    ///               and the lock is not aquired will throw an exception
+    ///   - body: Work to perform while the lock is held.
+    /// - Returns: The value returned by `body`
+    /// - Throws: `LockedJobError` if locking or body fails
+    ///
+    public class func withWriteLock<R>(_ path: String, blocking: Bool = true, _ body: () throws -> R) throws(LockedJobError) -> R {
+        return try FlockKit.withExclusiveWriteLock(at: path, blocking: blocking, body)
     }
 }
 
